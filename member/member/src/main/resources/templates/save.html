@@ -3,14 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>save</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
 </head>
 <body>
 <form action="/member/save" method="post">
-    이메일: <input type="text" name="memberEmail"><br>
+    이메일: <input type="text" name="memberEmail" id="memberEmail" onkeyup="emailCheck()"><br>
     비밀번호: <input type="text" name="memberPassword"> <br>
     이름: <input type="text" name="memberName"><br>
     <input type="submit" value="회원가입">
-
 </form>
 </body>
+<script th:inline="javascript">
+    const emailCheck = () => {
+        const email = document.getElementById("memberEamil").value;
+        console.log("입력값: ", email);
+        $.ajax({
+            // 요청 방식: post, url : "email-check", 데이터: 이메일
+            type: "post",
+            url: "/member/email-check",
+            data:{
+                "memberEamil" : email
+            },
+            success: function(res){
+                console.log("요청 성공", res);
+            },
+            error: function(err){
+                console.log("에러발생", err);
+            }
+        });
+    }
+
+</script>
 </html>
